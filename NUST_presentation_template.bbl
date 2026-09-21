@@ -1,0 +1,123 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{example_article}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5ce4601588022c38e60ef07ac0267cd5}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={First},
+           giveni={F\bibinitperiod}}}%
+        {{hash=8d695d6e3f15056ab99758cd7cb2bdd3}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={Second},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{fullhash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{fullhashraw}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{bibnamehash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{authorbibnamehash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{authornamehash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{authorfullhash}{7045cc1d1d90e49abdaa65818acde181}
+      \strng{authorfullhashraw}{7045cc1d1d90e49abdaa65818acde181}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal Name}
+      \field{number}{1}
+      \field{title}{Title of an Example Journal Article}
+      \field{volume}{1}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 10}
+      \range{pages}{10}
+    \endentry
+    \entry{example_book}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=f49742069c7ec258522f2eab91e8dfe0}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={Sixth},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {City}%
+      }
+      \list{publisher}{1}{%
+        {Publisher Name}%
+      }
+      \strng{namehash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{fullhash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{fullhashraw}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{bibnamehash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{authorbibnamehash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{authornamehash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{authorfullhash}{f49742069c7ec258522f2eab91e8dfe0}
+      \strng{authorfullhashraw}{f49742069c7ec258522f2eab91e8dfe0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Title of an Example Book}
+      \field{year}{2010}
+    \endentry
+    \entry{example_inproceedings}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=c2c4cea42d2bb60576f0d188082e31e5}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={Third},
+           giveni={T\bibinitperiod}}}%
+        {{hash=35b6829b3e332dbb072b7ade0dadf993}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={Fourth},
+           giveni={F\bibinitperiod}}}%
+        {{hash=acb0cffd7a16b3c248cd036b564baca6}{%
+           family={Author},
+           familyi={A\bibinitperiod},
+           given={Fifth},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{98ecbcc8262491dcb373904e33504fdb}
+      \strng{fullhash}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \strng{fullhashraw}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \strng{bibnamehash}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \strng{authorbibnamehash}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \strng{authornamehash}{98ecbcc8262491dcb373904e33504fdb}
+      \strng{authorfullhash}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \strng{authorfullhashraw}{fcfeb2922a2ab82c8c101d3528a95f78}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of an Example Conference}
+      \field{title}{Title of an Example Conference Paper}
+      \field{year}{2021}
+      \field{pages}{100\bibrangedash 110}
+      \range{pages}{11}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
