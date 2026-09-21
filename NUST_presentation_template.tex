@@ -1,0 +1,771 @@
+% NUST_presentation_template.tex -- beamer template for MS/PhD defence presentation at NUST
+% (proposal defence, pre-defence, final defence).
+% infolines outer theme,
+% NUST red/grey colour scheme, IEEE-style numeric references, and one frame
+% layout per section of the usual defence outline. Replace the placeholder
+% text; keep or drop frames as the talk needs.
+%
+% Build:  latexmk -pdf NUST_presentation_template.tex   (needs biber)
+% Bibliography: references.bib next to this file (replace with your own).
+
+% ---------------------------------------------------------------- aspect ratio
+% Change the number after aspectratio= and rebuild; nothing else needs editing.
+%   43   4:3   (128 x 96 mm)  -- the classic near-square projector format (default here)
+%   169  16:9  (160 x 90 mm)  -- widescreen; the format the layouts were first drawn for
+%   1610 16:10, 149 14:9, 141 1.41:1, 54 5:4 (the squarest), 32 3:2
+% Every width in the file is a fraction of \textwidth and every placeholder height a
+% fraction of \textheight, so the frames rescale; at the narrower ratios check the
+% four-column tables and the two-column result frames for crowding and drop to
+% \scriptsize or \tiny where needed.
+\documentclass[aspectratio=43, 11pt, xcolor=dvipsnames, compress]{beamer}
+
+% ---------------------------------------------------------------- theme
+\mode<presentation>
+\usefonttheme{professionalfonts}
+\useinnertheme{rectangles}
+\useoutertheme{infolines}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}   % no "Figure n:" on slides
+\setbeamerfont{caption}{size=\scriptsize}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{bibliography item}{\insertbiblabel}          % [n] labels in the reference list
+
+% colours -- NUST red/grey scheme
+\definecolor{nustred}{RGB}{160,30,35}
+\definecolor{nustgrey}{RGB}{60,60,60}
+\setbeamercolor{structure}{fg=nustred}
+\setbeamercolor{title}{fg=White,bg=nustred}
+\setbeamercolor{frametitle}{fg=nustgrey,bg=Black!8}
+\setbeamercolor{framesubtitle}{fg=nustred}
+\setbeamercolor{section in head/foot}{fg=White,bg=nustred!85}
+\setbeamercolor{subsection in head/foot}{fg=nustred,bg=Black!12}
+\setbeamercolor{title in head/foot}{fg=nustgrey,bg=Black!8}
+\setbeamercolor{author in head/foot}{fg=White,bg=nustred}
+\setbeamercolor{date in head/foot}{fg=nustgrey,bg=Black!15}
+\setbeamercolor{block title}{fg=White,bg=nustred!85}
+\setbeamercolor{block body}{bg=nustred!5}
+\setbeamercolor{block title alerted}{fg=White,bg=nustgrey}
+\setbeamercolor{block body alerted}{bg=Black!5}
+\setbeamercolor{alerted text}{fg=nustred}
+
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamerfont{footnote}{size=\tiny}
+
+% ---------------------------------------------------------------- packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{braket}
+\usepackage{graphicx}
+\graphicspath{{./}{figures/}}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{adjustbox}   % max width=\linewidth shrinks a table that is wider than its column
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{csquotes}
+
+% ---------------------------------------------------------------- bibliography (optional)
+% If references.bib exists next to this file it is used (biblatex + biber, IEEE numeric
+% style). If it does not, biblatex is not loaded, every \cite prints nothing, and the
+% References frame at the end is skipped, so the file builds with pdflatex alone and no
+% biber run. To use a bibliography under another name, change the filename in both
+% places below.
+\newif\ifhasbib
+\IfFileExists{./references.bib}{\hasbibtrue}{\hasbibfalse}
+\ifhasbib
+  \usepackage[backend=biber, style=ieee, citestyle=numeric-comp, doi=false, isbn=false, url=false, eprint=false, maxbibnames=3, minbibnames=1]{biblatex}
+  \addbibresource{references.bib}
+  \renewcommand*{\bibfont}{\scriptsize}
+  \setlength{\bibitemsep}{0.25ex}
+\else
+  \renewcommand{\cite}[2][]{\unskip}   % swallow the citation and the space before it
+\fi
+
+% column types for the wide comparison tables
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{F}{>{\raggedright\arraybackslash\bfseries}p{0.11\textwidth}}
+
+% +/- markers for the "how the research questions are answered" tables
+\newcommand{\rqplus}{\alert{$+$}}
+\newcommand{\rqminus}{\textcolor{nustgrey}{$-$}}
+
+% grey placeholder box standing in for a figure:
+%   \placeholderfig{<width as a fraction of the current \textwidth>}{<height as a fraction of \textheight>}{caption}
+% Inside a \column, \textwidth is the column width, so {1}{0.5} fills the column and
+% takes half the frame height whatever the aspect ratio is.
+\newcommand{\placeholderfig}[3]{%
+  \begin{tikzpicture}
+    \draw[fill=Black!6, draw=Black!30] (0,0) rectangle (#1\textwidth,#2\textheight);
+    \node[text=nustgrey, font=\scriptsize, align=center, text width=0.9*#1\textwidth] at (0.5*#1\textwidth,0.5*#2\textheight) {#3};
+  \end{tikzpicture}}
+
+% ---------------------------------------------------------------- title page
+% Edit the four bracketed items. The title, author and institute come from
+% \title / \author / \institute below.
+\setbeamertemplate{title page}{
+  \vfill
+  \centering
+  \usebeamertemplate{title}
+  \vskip0.2cm
+  \usebeamertemplate{titlegraphic}
+  \vskip0.2cm
+  \usebeamertemplate{author}
+  \vskip0.1cm
+  {\small [Proposal Defence / Pre-Defence / Final Defence]}\\[0.1cm]
+  {\footnotesize [MS / PhD] [Name of degree]}\\[0.25cm]
+  {\normalsize Supervisor: [Prof.] Dr.\ [Name of supervisor]}\\[0.25cm]
+  {\usebeamerfont{institute}[Department], School of Natural Sciences\\
+   National University of Sciences and Technology (NUST), Islamabad, Pakistan}\\[0.15cm]
+  {\usebeamerfont{date}\insertdate}
+  \vfill
+}
+
+\title[Short title]{Full Title of the Thesis,\\Possibly on Two Lines}
+\author[Student name]{Student name}
+\institute[SNS, NUST]{School of Natural Sciences, NUST}
+\date{\today}
+\titlegraphic{\includegraphics[height=0.15\textheight]{nust-logo.png}}
+
+% ================================================================
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% Two-column outline. The ranges must cover the numbered sections below
+% (ten as written); adjust them if sections are added or removed.
+\begin{frame}{Outline}
+  \small
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \tableofcontents[sections={1-5}]
+    \column{0.48\textwidth}
+      \tableofcontents[sections={6-10}]
+  \end{columns}
+\end{frame}
+
+% ================================================================
+\section{Introduction}
+
+% Two-column background frame: the classical / prior picture on the left,
+% the proposed one on the right, then one block stating why it matters.
+\begin{frame}{Background: [from the established picture to the proposed one]}
+  \small
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \textbf{[The established approach]}
+      \begin{itemize}
+        \item what it does, in one line; an equation if there is one: $x_{t+1} = f(x_t)$
+        \item its characteristic behaviour
+        \item where it is used
+      \end{itemize}
+    \column{0.5\textwidth}
+      \textbf{[The proposed approach]}
+      \begin{itemize}
+        \item what changes, with a citation~\cite{example_article}
+        \item the defining relation,
+          \[ U = S\,(\mathbb{I}\otimes C) \]
+        \item its characteristic behaviour, contrasted with the left column
+      \end{itemize}
+  \end{columns}
+  \vskip0.3cm
+  \begin{block}{Why this is a candidate [general tool / better method]}
+    One or two sentences, each supported by a citation~\cite{example_book, example_inproceedings}, giving the reason the proposed approach deserves the study.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Motivation}
+  \small
+  \begin{itemize}
+    \item \textbf{First motivating fact.} State it and say why it matters.
+    \item \textbf{Second motivating fact.} The step from the first to the problem studied.
+    \item \textbf{Third.} What changes when the proposed approach is adopted, with a citation~\cite{example_article}.
+  \end{itemize}
+  \begin{alertblock}{The practical interest}
+    Where the results would be used in practice, and why a method with these properties is plausibly a common ingredient of those uses.
+  \end{alertblock}
+\end{frame}
+
+% ================================================================
+\section{Literature Review}
+
+% Two-column review: one column per parent field.
+\begin{frame}{Literature review (1): [first parent field]; [second parent field]}
+  \small
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \textbf{[First field]}
+      \begin{itemize}
+        \item key result one~\cite{example_article}
+        \item key result two~\cite{example_inproceedings}
+        \item key result three
+        \item foundational theorems~\cite{example_book}
+      \end{itemize}
+    \column{0.5\textwidth}
+      \textbf{[Second field]}
+      \begin{itemize}
+        \item key result one~\cite{example_article}
+        \item key result two; the known obstacle~\cite{example_inproceedings}
+        \item benchmarking and the state of the evidence~\cite{example_book}
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% The intersection of the two fields: the work closest to this thesis.
+\begin{frame}{Literature review (2): [the intersection of the two fields]}
+  \small
+  A considerably smaller body of work than either parent field.
+  \begin{itemize}
+    \item \textbf{[Closest antecedent one.]} What it did~\cite{example_article} --- and in what respect it differs from this work.
+    \item \textbf{[Closest antecedent two.]} What it did~\cite{example_inproceedings} --- and what it is \emph{not}.
+    \item \textbf{[Design choices that matter and are seldom varied.]} Evidence that a choice usually fixed by convention changes the outcome~\cite{example_book}.
+  \end{itemize}
+\end{frame}
+
+\subsection{Research Gaps Identified}
+\begin{frame}{Research gaps identified}
+  \small
+  \begin{block}{Gap 1 --- [short name]}
+    What the literature asserts or assumes, and what it has not actually done.
+  \end{block}
+  \begin{block}{Gap 2 --- [short name]}
+    Which free choices are fixed by convention, with evidence that they matter~\cite{example_article}.
+  \end{block}
+  \begin{block}{Gap 3 --- [short name]}
+    What comparison is missing, and under what protocol it would have to be made~\cite{example_inproceedings}.
+  \end{block}
+\end{frame}
+
+% ================================================================
+\section{Problem Statement}
+\begin{frame}{Problem statement}
+  \footnotesize
+  \begin{itemize}
+    \item The observation the problem rests on: \textbf{what is seldom varied, measured, or compared} in existing work.
+    \item Why the obvious justification for the proposed approach is not by itself an answer.
+  \end{itemize}
+  \begin{alertblock}{The problem addressed}
+    One sentence stating exactly what is instantiated, on what terms, across which cases ---
+    \textbf{[case family A]} and
+    \textbf{[case family B]} ---
+    and what is measured for each.
+  \end{alertblock}
+  \vskip0.1cm
+  \textbf{Framing:} the one-line framing of the thesis, and what remains the application.\\
+  \textbf{Limits fixed at the outset:} what is and is not claimed; the simulation or experimental regime; how a negative outcome is treated.
+\end{frame}
+
+% ================================================================
+\section{Research Questions}
+\begin{frame}{Research questions}
+  For every case the same three questions are posed:
+  \vskip0.3cm
+  \begin{enumerate}
+    \item[\textbf{RQ1}] \textbf{[Formulation.]} What is asked first, stated precisely.
+    \vskip0.2cm
+    \item[\textbf{RQ2}] \textbf{[Cost.]} What is asked second, and in which units.
+    \vskip0.2cm
+    \item[\textbf{RQ3}] \textbf{[Performance.]} What is asked third, and against what baseline.
+  \end{enumerate}
+  \vskip0.4cm
+  \begin{block}{Variables of the investigation (not its subject)}
+    The parameters that are varied wherever a case makes the comparison meaningful, listed so the committee can see they are controls rather than the contribution.
+  \end{block}
+\end{frame}
+
+% ================================================================
+\section{Research Objectives}
+\begin{frame}{Research objectives}
+  \begin{enumerate}
+    \item[\textbf{O1}] Produce a \textbf{[deliverable one]} on [cases].
+    \item[\textbf{O2}] Exhibit \textbf{[deliverable two]}, simulate it, and cost it.
+    \item[\textbf{O3}] Show that \textbf{[claim three]}, and evaluate it against [baselines].
+    \item[\textbf{O4}] Reproduce \textbf{[known result]} and quantify [what it costs].
+    \item[\textbf{O5}] Build \textbf{[the learning / application models]} and evaluate them under a fixed protocol against tuned baselines.
+    \item[\textbf{O6}] Report negative results with the same precision as positive ones, and identify the \textbf{regime in which the approach is advantageous}.
+  \end{enumerate}
+\end{frame}
+
+% ================================================================
+\section{Methodology}
+
+\subsection{Justification of Proposed Methodology}
+\begin{frame}{Justification of the methodology}
+  \small
+  \begin{itemize}
+    \item \textbf{Why [the central construction] everywhere?} The reason, with a citation~\cite{example_article}; where the alternative construction is still used and why. (Note any committee observation from the proposal defence that this answers.)
+    \item \textbf{Why one primitive across [several] cases?} What that is the only way to test.
+    \item \textbf{Why [simulation / this experimental setting]?} What the setting guarantees and what it leaves out.
+    \item \textbf{Why [this reporting discipline]~\cite{example_inproceedings}?} Tuned baselines, splits fixed before model selection, results over seeds.
+    \item \textbf{Why report cost in [these units]?} What the more common unit hides.
+  \end{itemize}
+\end{frame}
+
+\subsection{Alternative Approaches}
+\begin{frame}{Alternative approaches considered}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{0.30\textwidth} >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    Alternative & Why it was not the main route \\
+    \midrule
+    {}[Alternative one]~\cite{example_article} & Why it does not answer the research questions; what is built instead. \\
+    {}[Alternative two] & Its cost or prerequisite; where it is nevertheless used. \\
+    {}[Standard constructions from the literature] & Kept --- but as tuned \emph{baselines}, not as the object of study. \\
+    {}[Runs on real hardware / field data] & Not needed to answer RQ1--RQ3; what would obscure the comparison. Future work. \\
+    {}[Out-of-scope generalisation]~\cite{example_book} & Out of scope; the restriction that applies throughout. \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\subsection{Details}
+% Two-column details frame: definitions on the left, the axes of variation
+% on the right.
+\begin{frame}{Details (1): [the central object as a design space]}
+  \footnotesize
+  \begin{columns}[T]
+    \column{0.55\textwidth}
+      \textbf{Setting.} The objects, their sizes, and the notation used for the rest of the talk.
+      \vskip0.2cm
+      \textbf{The family used throughout:}
+      \[
+        K(\delta,\theta) = \Phi(\delta)\,e^{-i\theta G}
+      \]
+      \begin{itemize}
+        \item what the first parameter interpolates between
+        \item what the second parameter interpolates between
+        \item a property that makes it usable in the method (e.g.\ differentiable)
+      \end{itemize}
+    \column{0.45\textwidth}
+      \textbf{Two axes of variation}
+      \begin{enumerate}
+        \item \textbf{[Axis one]}: what it depends on; its cost.
+        \item \textbf{[Axis two]}: what it depends on; parameter count; the axis the trained models use.
+      \end{enumerate}
+      \vskip0.2cm
+      \textbf{Characterised before any objective is optimised:} the quantities measured for every configuration.
+  \end{columns}
+\end{frame}
+
+% Four-column construction / baseline / protocol table, one row per case.
+\begin{frame}{Details (2): [first group of cases] --- construction, baseline, protocol}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}F Y Y Y@{}}
+    \toprule
+    Case & Construction & Baseline & Protocol \\
+    \midrule
+    {}[Case A] & what is built & what it is compared with & sizes, seeds, tooling, repetitions \\
+    {}[Case B] & what is built & what it is compared with & sizes, seeds, tooling, repetitions \\
+    {}[Case C] & what is built & what it is compared with & sizes, seeds, tooling, repetitions \\
+    {}[Case D] & what is built & what it is compared with & sizes, seeds, tooling, repetitions \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\begin{frame}{Details (3): [second group of cases] --- construction, baselines, protocol}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabularx}{\textwidth}{@{}F Y Y Y@{}}
+    \toprule
+    Case & Construction & Baselines & Protocol \\
+    \midrule
+    {}[Case E] & what is built & the baselines, tuned~\cite{example_article} & dataset, split, loss, optimiser, budget, seeds \\
+    {}[Case F] & what is built & the baselines, tuned & datasets~\cite{example_inproceedings}; cross-validation; splits \\
+    {}[Case G] & what is built & the baselines, tuned~\cite{example_book} & datasets; folds \\
+    \bottomrule
+  \end{tabularx}
+  \vskip0.2cm
+  One sentence on the protocol rule that applies to every row (e.g.\ hyperparameters selected on the training fold alone).
+\end{frame}
+
+% ================================================================
+\section{Implementation}
+\begin{frame}{Implementation}
+  \footnotesize
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \textbf{Tooling}
+      \begin{itemize}
+        \item libraries and versions
+        \item any custom core, and how it was cross-checked
+        \item validation against an independent reference
+      \end{itemize}
+      \textbf{Reproducibility}
+      \begin{itemize}
+        \item every stochastic element seeded and stated
+        \item results written to a record; every table and figure generated from it by script
+      \end{itemize}
+    \column{0.5\textwidth}
+      \textbf{Code organisation} (\texttt{[repository]})
+      \begin{itemize}
+        \item \texttt{[module one]} --- what it holds
+        \item \texttt{[module two]} --- what it holds
+        \item \texttt{[module three]} --- what it holds
+      \end{itemize}
+      \textbf{Limits}
+      \begin{itemize}
+        \item the size or regime that is tractable, and what sets it
+        \item what is idealised away, and what that makes the reported numbers (e.g.\ a ceiling)
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% Figure frame: two stacked figures with a short reading below.
+% Replace \placeholderfig with \includegraphics[width=0.8\textwidth, height=0.36\textheight, keepaspectratio]{figure.pdf}.
+\begin{frame}{Implementation: [the central construction as a diagram]}
+  \centering
+  \placeholderfig{0.8}{0.32}{figure 1 --- e.g.\ the construction as a circuit or block diagram}\\[0.1cm]
+  \placeholderfig{0.8}{0.22}{figure 2 --- e.g.\ one component in detail}
+  \begin{itemize}\small
+    \item What one layer / unit of the construction consists of.
+    \item The feature of the construction the results will turn on.
+  \end{itemize}
+\end{frame}
+
+% ================================================================
+\section{Results and Evaluation}
+
+% Result frame, layout A: figure left, table + bullets right, one-line
+% caveat at the bottom. Replace \placeholderfig with \includegraphics.
+\begin{frame}{Result 1 --- [what was measured] (RQ2)}
+  \begin{columns}[T]
+    \column{0.55\textwidth}
+      \placeholderfig{1}{0.45}{figure --- e.g.\ scaling plot}
+    \column{0.45\textwidth}
+      \scriptsize
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}llrrr@{}}
+        \toprule
+        Case & $N$ & Size & Baseline & Proposed \\
+        \midrule
+        A1 &  64 & 7  &   7\,270 & 422 \\
+        A2 & 256 & 9  & 119\,383 & 902 \\
+        A3 & 1024 & 11 & ---     & 1\,614 \\
+        B1 &  64 & 8  &  29\,655 & 153 \\
+        B2 & 256 & 10 & ---      & 257 \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \begin{itemize}
+        \item baseline: its scaling
+        \item proposed: \alert{its scaling} --- the headline saving
+        \item the variant that does \emph{not} scale, and by how much
+      \end{itemize}
+  \end{columns}
+  \scriptsize The condition under which the saving holds, and where it does not.
+\end{frame}
+
+% Result frame, layout B: two figures side by side, bullets below.
+\begin{frame}{Result 2 --- [what was measured] (O4)}
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \placeholderfig{0.95}{0.45}{figure --- left}
+    \column{0.5\textwidth}
+      \placeholderfig{0.95}{0.45}{figure --- right}
+  \end{columns}
+  \small
+  \begin{itemize}
+    \item The reproduced known result, with the fitted exponent and the theorem it agrees with~\cite{example_article}.
+    \item The extension, and what it costs.
+    \item \alert{The one-sentence conclusion the committee should take from this frame.}
+  \end{itemize}
+\end{frame}
+
+% Result frame, layout C: figure left, numeric table + bullets right.
+\begin{frame}{Result 3 --- [what was measured] (O2)}
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \placeholderfig{1}{0.55}{figure}
+    \column{0.5\textwidth}
+      \scriptsize
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}rrrrrl@{}}
+        \toprule
+        $N$ & $a$ & $r$ & $P(r)$ & cost & outcome \\
+        \midrule
+        15 & 7  & 4  & 0.51 &    522 & $3\times5$ \\
+        21 & 2  & 6  & 0.31 & 10\,103 & $7\times3$ \\
+        35 & 3  & 12 & 0.32 & 49\,739 & $7\times5$ \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \scriptsize
+      \begin{itemize}
+        \item what the construction is, in one line
+        \item what it achieves, quantitatively
+        \item \alert{what it does not give}, stated as plainly as the positive result
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% Result frame, layout D: figure left, table with a caption line above it.
+\begin{frame}{Result 4 --- [what was measured] (O3)}
+  \begin{columns}[T]
+    \column{0.52\textwidth}
+      \placeholderfig{1}{0.55}{figure}
+    \column{0.48\textwidth}
+      \scriptsize
+      Setting; figure of merit defined in one line
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}clrr@{}}
+        \toprule
+        $p$ & Method & Ratio & $P(\text{ok})$ \\
+        \midrule
+        1 & proposed (variant 1) & $0.852\pm0.022$ & 1.00 \\
+          & proposed (variant 2) & $0.759\pm0.018$ & 1.00 \\
+          & baseline             & $0.308\pm0.066$ & 0.38 \\
+        4 & proposed (variant 1) & $0.910\pm0.020$ & 1.00 \\
+          & proposed (variant 2) & $0.857\pm0.051$ & 1.00 \\
+          & baseline             & $0.370\pm0.077$ & 0.47 \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \scriptsize
+      \begin{itemize}
+        \item the construction and the identity or property it rests on
+        \item the headline: \alert{$>2\times$} the baseline --- and \emph{why}
+        \item honest reading: where the proposed method is weaker
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+% Result frame, layout E: figure left, model table with the proposed row in bold.
+\begin{frame}{Result 5 --- [first learning / application result] (O5)}
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \placeholderfig{1}{0.55}{figure --- e.g.\ training curves}
+    \column{0.5\textwidth}
+      \tiny Task; metric over $k$ repetitions
+      \setlength{\tabcolsep}{3pt}
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Model & Size & Params & Acc.\ (\%) \\
+        \midrule
+        reference model A               & 8 & 16 & $99.0\pm3.0$ \\
+        \textbf{proposed (best variant)} & \textbf{5} & 32 & $\mathbf{99.0\pm2.0}$ \\
+        proposed (variant 2)            & 5 & 32 & $92.7\pm4.4$ \\
+        proposed (variant 3)            & 5 & 10 & $92.5\pm3.0$ \\
+        reference model B               & 8 & 16 & $71.3\pm11.2$ \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \scriptsize
+      \begin{itemize}
+        \item the reference reproduced, and what its result depends on
+        \item the proposed model matches it \alert{at lower size} --- and why
+        \item a variant that does worse, and the interpretation
+        \item the cost caveat that keeps this a simulation result
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Result 6 --- [second learning / application result] (O5)}
+  \begin{columns}[T]
+    \column{0.55\textwidth}
+      \placeholderfig{1}{0.55}{figure --- e.g.\ accuracy by dataset}
+    \column{0.45\textwidth}
+      \scriptsize Secondary statistic, defined in one line
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Dataset & Proposed & Base.\ 1 & Base.\ 2 \\
+        \midrule
+        dataset 1 & 0.79 & 0.79 & 0.35 \\
+        dataset 2 & 0.81 & 0.89 & 0.28 \\
+        dataset 3 & 0.69 & 0.68 & \alert{0.10} \\
+        dataset 4 & 0.60 & 0.60 & \alert{0.10} \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \scriptsize
+      \begin{itemize}
+        \item a sanity check that passed
+        \item the headline: \alert{best or joint-best among the like-for-like methods}
+        \item the known failure mode~\cite{example_article} that the proposed method avoids, and why
+        \item no advantage over the tuned classical baselines: say so
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Result 7 --- [third learning / application result] (O5)}
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \placeholderfig{1}{0.55}{figure}
+    \column{0.5\textwidth}
+      \tiny Metric (\%), $k\times m$ folds
+      \setlength{\tabcolsep}{2.5pt}
+      \begin{adjustbox}{max width=\linewidth}
+      \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        Method & Set 1 & Set 2 & Set 3 & Set 4 \\
+        \midrule
+        proposed        & $84.2\pm8.8$ & $57.0\pm7.0$ & $74.6\pm3.7$ & $70.6\pm3.5$ \\
+        classical control & $87.2\pm8.3$ & $58.5\pm9.9$ & $74.8\pm4.3$ & $70.6\pm4.9$ \\
+        standard baseline & $82.0\pm10.3$ & $60.3\pm6.4$ & $75.0\pm3.8$ & $71.0\pm3.9$ \\
+        proposed, trained & $88.3\pm7.0$ & $57.6\pm6.6$ & --- & --- \\
+        proposed, fixed   & $88.1\pm8.2$ & $57.5\pm4.9$ & --- & --- \\
+        \bottomrule
+      \end{tabular}
+      \end{adjustbox}
+      \vskip0.15cm
+      \scriptsize
+      \begin{itemize}
+        \item what the proposed method reaches, against the standard baseline
+        \item it does \alert{not} beat the classical control: say where and by how much
+        \item an identified confound, and what must be repeated
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+\subsection[RQs Answered / Objectives Met]{How Research Questions are Answered and Research Objectives are Met}
+% One row per case; the three RQ columns; \rqplus / \rqminus mark the
+% direction of each finding.
+\begin{frame}{How the research questions are answered (1): [first group of cases]}
+  \scriptsize
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{0.13\textwidth} Y Y Y@{}}
+    \toprule
+    Case (obj.) & RQ1 --- formulation & RQ2 --- cost & RQ3 --- against a tuned baseline \\
+    \midrule
+    {}[Case A] (O1) & the formulation in one line & its cost & \rqplus\ the positive finding; \rqminus\ the limit \\
+    {}[Case B] (O2) & the formulation in one line & its cost & the quantitative outcome; \rqminus\ what it does not give \\
+    {}[Case C] (O3) & the formulation in one line & its cost & \rqplus\ the positive finding; \rqminus\ where it is weaker \\
+    {}[Case D] (O4) & the formulation in one line & its cost & matches the known result; \rqminus\ the qualification \\
+    \bottomrule
+  \end{tabularx}
+  \vskip0.2cm
+  \textbf{O6} --- every negative outcome is reported at the same precision as the positive ones.
+\end{frame}
+
+\begin{frame}{How the research questions are answered (2): [second group of cases]}
+  \scriptsize
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{0.13\textwidth} Y Y Y@{}}
+    \toprule
+    Case (obj.) & RQ1 --- formulation & RQ2 --- cost & RQ3 --- against a tuned baseline \\
+    \midrule
+    {}[Case E] (O5) & the formulation in one line & size vs.\ the reference; the depth caveat & \rqplus\ matched the reference; \rqminus\ a variant fits worse; \rqminus\ not a device proposal \\
+    {}[Case F] (O5) & the formulation in one line & its cost & \rqplus\ best or joint-best like-for-like; \rqminus\ within noise of the classical baselines \\
+    {}[Case G] (O5) & the formulation in one line & its cost & \rqplus\ matches the standard baseline; \rqminus\ never beats the classical control \\
+    \bottomrule
+  \end{tabularx}
+  \vskip0.2cm
+  \textbf{Regime identified (O6):} the one-sentence statement of where the approach pays and where it does not.
+\end{frame}
+
+\begin{frame}{Discussion: what [the approach] buys, and what it does not}
+  \footnotesize
+  \begin{columns}[T]
+    \column{0.5\textwidth}
+      \begin{block}{[The approach] buys}
+        \begin{enumerate}
+          \item \textbf{[Gain one]} --- the number that shows it.
+          \item \textbf{[Gain two]} --- the number that shows it.
+          \item \textbf{[Gain three]} --- the number that shows it.
+          \item \textbf{[Gain four]}.
+        \end{enumerate}
+      \end{block}
+    \column{0.5\textwidth}
+      \begin{alertblock}{[The approach] does not buy}
+        \begin{enumerate}
+          \item {}[Non-gain one], stated plainly.
+          \item {}[Non-gain two], with the size of the effect against the noise.
+          \item {}[Non-gain three].
+          \item {}[Non-gain four].
+        \end{enumerate}
+      \end{alertblock}
+  \end{columns}
+  \vskip0.2cm
+  \begin{center}
+    \textbf{Pattern:} the one-sentence rule that separates the two columns.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Threats to validity}
+  \small
+  \begin{itemize}
+    \item \textbf{Scale.} The sizes reached, and what the fitted quantities do and do not establish.
+    \item \textbf{Cost proxies.} What the cost measure ignores; which comparisons are therefore claimed.
+    \item \textbf{Optimisation.} The optimiser and budget; what was \emph{not} measured --- name the largest single gap in the evidence.
+    \item \textbf{Data.} Provenance of the datasets; which baselines reproduce published figures; what the synthetic tasks are and are not evidence for.
+    \item \textbf{Scope.} The restrictions per case, in one line each.
+  \end{itemize}
+\end{frame}
+
+% ================================================================
+\section{Conclusion}
+\begin{frame}{Conclusion}
+  \small
+  \begin{itemize}
+    \item What was treated as \textbf{the object of study}, and across how many cases, on what terms.
+    \item \textbf{The central lesson}, in one sentence.
+    \item \textbf{Where it pays:} the list, in one line.
+    \item \textbf{Where it does not:} the list, in one line.
+    \item The scope of the claims; \textbf{what is not claimed}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Limitations and future work}
+  \footnotesize
+  \begin{block}{Limitations}
+    A single paragraph listing the restrictions of the study, separated by semicolons, with the most consequential one marked in italics.
+  \end{block}
+  \begin{block}{Future work (in order of how well-posed it is)}
+    \begin{enumerate}
+      \item The best-defined next step, with what it would cost.
+      \item The measurement that was missing, with the references that define it~\cite{example_article, example_inproceedings}.
+      \item The natural extension of the strongest result.
+      \item The open question that decides whether the programme continues.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+% ================================================================
+\section{Misc Link (Git/Publication)}
+\begin{frame}{Code, manuscript and publications}
+  \begin{itemize}
+    \item \textbf{Simulation code} (what it contains):\\
+      \texttt{[repository URL]}
+    \item \textbf{Manuscript source} (LaTeX, bibliography, generated tables):\\
+      \texttt{[repository URL]}
+    \item \textbf{Conference poster / talk} --- [venue, year]:\\
+      \texttt{[title / link]}
+    \item \textbf{Publication / preprint:}\\
+      \texttt{[none yet / arXiv link]}
+  \end{itemize}
+  \vskip0.4cm
+  \small One sentence on how the figures and tables in the talk were produced and how the random components were fixed.
+\end{frame}
+
+% ================================================================
+\ifhasbib   % the whole reference list is skipped when there is no references.bib
+\section*{References}
+\begin{frame}[allowframebreaks]{References}
+  \printbibliography[heading=none]
+\end{frame}
+\fi
+
+\begin{frame}[plain]
+  \begin{center}
+    \vfill
+    {\usebeamercolor[fg]{structure}\Huge Thank you}\\[0.5cm]
+    {\large Questions}
+    \vfill
+  \end{center}
+\end{frame}
+
+\end{document}
