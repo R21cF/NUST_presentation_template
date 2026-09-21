@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber NUST_presentation_template"] 1790014685.07538 "NUST_presentation_template.bcf" "NUST_presentation_template.bbl" "NUST_presentation_template" 1790014702.7999 0
-  "NUST_presentation_template.bcf" 1790014702 109866 882ecdca8e9f68fe3920905065293fc9 "pdflatex"
+["biber NUST_presentation_template"] 1790014685.07538 "NUST_presentation_template.bcf" "NUST_presentation_template.bbl" "NUST_presentation_template" 1790014887.43532 0
+  "NUST_presentation_template.bcf" 1790014886 109866 882ecdca8e9f68fe3920905065293fc9 "pdflatex"
   "references.bib" 1790005695 890 6b6eccc2582f9498571616f03425a5eb ""
   (generated)
   "NUST_presentation_template.bbl"
   "NUST_presentation_template.blg"
   (rewritten before read)
-["pdflatex"] 1790014697.59737 "c:/Osaid/University/(2)/Thesis/pre_defence/NUST_presentation_template/NUST_presentation_template.tex" "NUST_presentation_template.pdf" "NUST_presentation_template" 1790014702.8008 0
+["pdflatex"] 1790014880.37936 "c:/Osaid/University/(2)/Thesis/pre_defence/NUST_presentation_template/NUST_presentation_template.tex" "NUST_presentation_template.pdf" "NUST_presentation_template" 1790014887.43631 0
   "C:/Users/QI/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1790006357 484431 00ff166fe8a0443b0a9f844809c11a2b ""
   "C:/Users/QI/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1787152910 13366689 9062518918eda25d6249c469197ca9b9 ""
   "C:/Users/QI/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -308,14 +308,14 @@
   "C:/Users/QI/AppData/Local/Programs/MiKTeX/tex/latex/varwidth/varwidth.sty" 1238469540 10894 d359a13923460b2a73d4312d613554c8 ""
   "C:/Users/QI/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/QI/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
-  "NUST_presentation_template.aux" 1790014702 11737 c2a74e38411a94f17c8a5a2eb0cf94b9 "pdflatex"
+  "NUST_presentation_template.aux" 1790014886 11737 c2a74e38411a94f17c8a5a2eb0cf94b9 "pdflatex"
   "NUST_presentation_template.bbl" 1790014687 4653 f03644fc03503c8ce750fa827501e9a8 "biber NUST_presentation_template"
-  "NUST_presentation_template.nav" 1790014702 5919 3b16766dff7818068b4452ba67682b02 "pdflatex"
-  "NUST_presentation_template.out" 1790014702 2516 67934da2468241f8f9d2bdc7ef33654f "pdflatex"
-  "NUST_presentation_template.run.xml" 1790014702 2528 683ccd06bb9dfc9556eeb306750475c8 "pdflatex"
-  "NUST_presentation_template.tex" 1790014676 33530 b2de4a8b5ec87110db9ce9e826e03b87 ""
-  "NUST_presentation_template.toc" 1790014702 936 ad9d6ab66177e261f5a999a8f6bf9195 "pdflatex"
-  "c:/Osaid/University/(2)/Thesis/pre_defence/NUST_presentation_template/NUST_presentation_template.tex" 1790014676 33530 b2de4a8b5ec87110db9ce9e826e03b87 ""
+  "NUST_presentation_template.nav" 1790014886 5919 3b16766dff7818068b4452ba67682b02 "pdflatex"
+  "NUST_presentation_template.out" 1790014886 2516 67934da2468241f8f9d2bdc7ef33654f "pdflatex"
+  "NUST_presentation_template.run.xml" 1790014886 2528 683ccd06bb9dfc9556eeb306750475c8 "pdflatex"
+  "NUST_presentation_template.tex" 1790014879 33525 2386ba8fb46d472e35cb8f65c458fbe2 ""
+  "NUST_presentation_template.toc" 1790014886 936 ad9d6ab66177e261f5a999a8f6bf9195 "pdflatex"
+  "c:/Osaid/University/(2)/Thesis/pre_defence/NUST_presentation_template/NUST_presentation_template.tex" 1790014879 33525 2386ba8fb46d472e35cb8f65c458fbe2 ""
   "nust-logo.png" 1790000190 29939 56f78c2cf4c1695e55342de8e2acbe4d ""
   "references.bib" 1790005695 890 6b6eccc2582f9498571616f03425a5eb ""
   (generated)
